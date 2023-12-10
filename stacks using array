@@ -1,0 +1,78 @@
+#include<iostream>
+using namespace std;
+
+class stack
+{
+private:
+	int *arr;
+	int size;
+	int top;
+public:
+	stack();
+	void push(int);
+	int pop();
+	bool isFull();
+	bool isEmpty();
+};
+stack::stack()
+{
+	size = 10;
+	arr = new int[size];
+	top = -1;
+}
+void stack::push(int pval)
+{
+	if (isFull())
+		return;
+	else
+	{
+		top++;
+		arr[top] = pval;
+	}
+}
+int stack::pop()
+{
+	if (isEmpty())
+		return 0;
+	else
+	{
+		int val;
+		val = arr[top];
+		top--;
+		return val;
+	}
+}
+bool stack::isFull()
+{
+	if (top == (size - 1))
+		return true;
+	else
+		return false;
+}
+bool stack::isEmpty()
+{
+	if (top == -1)
+		return true;
+	else
+		return false;
+}
+
+int main()
+{
+	stack *s;
+	s = new stack();
+
+	s->push(5);
+	s->push(10);
+	s->push(15);
+	s->push(20);
+	s->push(25);
+
+	int temp = s->pop();
+	int temp1 = s->pop();
+
+	cout << temp << endl;
+	cout << temp1 << endl;
+
+	return 0;
+}

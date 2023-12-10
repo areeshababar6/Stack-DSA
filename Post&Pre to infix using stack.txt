@@ -1,0 +1,89 @@
+#include <stack>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+bool isoperand(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return true;
+	else
+		return false;
+}
+string GetInfix_Post(string s)
+{
+	stack<string> stk;
+
+	int len = s.size();
+	for (int i = 0; i < len; i++)
+	{
+		if (isoperand(s[i]))
+		{
+			string op(1, s[i]);
+			stk.push(op);
+		}
+		else
+		{
+			string op1, op2, op;
+			op1 = stk.top();
+			stk.pop();
+			op2 = stk.top();
+			stk.pop();
+
+			op = ("(" + op2 + s[i] + op1 + ")");
+			stk.push(op);
+		}
+	}
+
+	string infix = stk.top();
+	stk.pop();
+	return infix;
+}
+string GetInfix_Pre(string s)
+{
+	stack<string> stk;
+
+	int len = s.size();
+
+	for (int i = len-1; i >= 0; i--)
+	{
+		if (isoperand(s[i]))
+		{
+			string op(1, s[i]);
+			stk.push(op);
+		}
+		else
+		{
+			string op1, op2, op;
+			op1 = stk.top();
+			stk.pop();
+			op2 = stk.top();
+			stk.pop();
+
+			op = ("(" + op1 + s[i] + op2 + ")");
+			stk.push(op);
+		}
+	}
+
+	string infix = stk.top();
+	stk.pop();
+	return infix;
+}
+
+int main()
+{
+	string s;
+
+	cout << " Enter your Postfix equation: ";
+	cin >> s;
+	cout << " From Postfix: " << GetInfix_Post(s) << endl;
+
+
+	cout << "\n\n Enter your Prefix equation: ";
+	cin >> s;
+	cout << "\n From Prefix: " << GetInfix_Pre(s);
+	cout << endl;
+
+	return 0;
+}
